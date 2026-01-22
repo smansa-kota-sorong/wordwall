@@ -56,34 +56,36 @@
     <iframe style="max-width:100%" src="https://wordwall.net/embed/06da1e012cc34affad681b4ae3920718?themeId=65&templateId=30&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
 </div>
     <script>
-// ===== FULLSCREEN =====
-function goFull() {
-  let el = document.documentElement;
-  if (el.requestFullscreen) el.requestFullscreen();
-  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-  else if (el.msRequestFullscreen) el.msRequestFullscreen();
-}
+// BLOCK RIGHT CLICK
+document.addEventListener("contextmenu", e => e.preventDefault());
 
-document.getElementById("start").addEventListener("click", goFull);
-
-// ===== BLOCK RIGHT CLICK =====
-document.addEventListener('contextmenu', function(e) {
-  e.preventDefault();
-});
-
-// ===== BLOCK INSPECT =====
-document.addEventListener('keydown', function(e) {
+// BLOCK KEYS
+document.addEventListener("keydown", function(e) {
   if (
     e.key === "F12" ||
-    (e.ctrlKey && e.shiftKey && e.key === "I") ||
-    (e.ctrlKey && e.shiftKey && e.key === "C") ||
-    (e.ctrlKey && e.shiftKey && e.key === "J") ||
+    (e.ctrlKey && e.shiftKey && ["I","C","J"].includes(e.key)) ||
     (e.ctrlKey && e.key === "U")
   ) {
     e.preventDefault();
+    return false;
   }
 });
-</script>
 
+// DETECT DEVTOOLS OPEN
+setInterval(function() {
+  const before = new Date().getTime();
+  debugger;
+  const after = new Date().getTime();
+  if (after - before > 100) {
+    document.body.innerHTML = "<h1 style='color:white;text-align:center;margin-top:40vh'>Inspect Diblokir</h1>";
+  }
+}, 500);
+
+// BLOCK TEXT SELECT
+document.addEventListener("selectstart", e => e.preventDefault());
+
+// BLOCK COPY
+document.addEventListener("copy", e => e.preventDefault());
+</script>
 </body>
 </html>
