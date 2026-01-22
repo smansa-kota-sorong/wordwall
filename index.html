@@ -2,7 +2,9 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Open the Box - Refleksi</title>
+<link rel="icon" type="image/png" href="namira.png">
+<link rel="apple-touch-icon" href="namira.png">
+<title>Refleksi</title>
 <style>
     body {
         margin: 0;
@@ -53,6 +55,35 @@
 
     <iframe style="max-width:100%" src="https://wordwall.net/embed/06da1e012cc34affad681b4ae3920718?themeId=65&templateId=30&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
 </div>
+    <script>
+// ===== FULLSCREEN =====
+function goFull() {
+  let el = document.documentElement;
+  if (el.requestFullscreen) el.requestFullscreen();
+  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  else if (el.msRequestFullscreen) el.msRequestFullscreen();
+}
+
+document.getElementById("start").addEventListener("click", goFull);
+
+// ===== BLOCK RIGHT CLICK =====
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
+
+// ===== BLOCK INSPECT =====
+document.addEventListener('keydown', function(e) {
+  if (
+    e.key === "F12" ||
+    (e.ctrlKey && e.shiftKey && e.key === "I") ||
+    (e.ctrlKey && e.shiftKey && e.key === "C") ||
+    (e.ctrlKey && e.shiftKey && e.key === "J") ||
+    (e.ctrlKey && e.key === "U")
+  ) {
+    e.preventDefault();
+  }
+});
+</script>
 
 </body>
 </html>
