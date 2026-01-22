@@ -2,67 +2,73 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <link rel="icon" type="image/png" href="namira.png">
 <link rel="apple-touch-icon" href="namira.png">
+
 <title>Refleksi</title>
+
 <style>
-    body {
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(#0f2027, #203a43, #2c5364);
-        font-family: Arial, Helvetica, sans-serif;
-    }
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(#0f2027, #203a43, #2c5364);
+    font-family: Arial, Helvetica, sans-serif;
+    user-select: none;
+}
 
-    .wrapper {
-        background: rgba(0,0,0,0.45);
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        max-width: 600px;
-        width: 100%;
-    }
+.wrapper {
+    background: rgba(0,0,0,0.45);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+}
 
-    h1 {
-        color: white;
-        margin: 0;
-        font-size: 24px;
-    }
+h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
 
-    h2 {
-        color: #ddd;
-        font-weight: normal;
-        margin: 10px 0 20px;
-        font-size: 18px;
-    }
+h2 {
+    color: #ddd;
+    font-weight: normal;
+    margin: 10px 0 20px;
+    font-size: 18px;
+}
 
-    iframe {
-        width: 100%;
-        height: 380px;
-        border-radius: 8px;
-        border: none;
-        background: #fff;
-    }
+iframe {
+    width: 100%;
+    height: 380px;
+    border-radius: 8px;
+    border: none;
+    background: #fff;
+}
 </style>
 </head>
+
 <body>
 
 <div class="wrapper">
     <h1>REFLEKSI</h1>
     <h2>NAMIRA HB</h2>
 
-    <iframe style="max-width:100%" src="https://wordwall.net/embed/06da1e012cc34affad681b4ae3920718?themeId=65&templateId=30&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+    <iframe src="https://wordwall.net/embed/06da1e012cc34affad681b4ae3920718?themeId=65&templateId=30&fontStackId=0" allowfullscreen></iframe>
 </div>
-    <script>
-// ===== FULLSCREEN =====
-function goFull(){
+
+<script>
+// ===== AUTO FULLSCREEN ON FIRST TAP =====
+document.addEventListener("click", function () {
   let el = document.documentElement;
-  if(el.requestFullscreen) el.requestFullscreen();
-  else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-}
-document.getElementById("start").addEventListener("click", goFull);
+  if (el.requestFullscreen) el.requestFullscreen();
+  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+}, { once: true });
 
 // ===== BLOCK RIGHT CLICK =====
 document.addEventListener("contextmenu", e => e.preventDefault());
@@ -70,9 +76,9 @@ document.addEventListener("contextmenu", e => e.preventDefault());
 // ===== BLOCK KEYS =====
 document.addEventListener("keydown", function(e){
   if(
-    e.key==="F12" ||
+    e.key === "F12" ||
     (e.ctrlKey && e.shiftKey && ["I","C","J"].includes(e.key)) ||
-    (e.ctrlKey && e.key==="U")
+    (e.ctrlKey && e.key === "U")
   ){
     e.preventDefault();
     return false;
@@ -80,8 +86,8 @@ document.addEventListener("keydown", function(e){
 });
 
 // ===== BLOCK COPY & SELECT =====
-document.addEventListener("copy", e=>e.preventDefault());
-document.addEventListener("selectstart", e=>e.preventDefault());
+document.addEventListener("copy", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
 
 // ===== DEVTOOLS DETECT =====
 setInterval(function(){
@@ -89,14 +95,33 @@ setInterval(function(){
   debugger;
   const after = new Date().getTime();
   if(after - before > 100){
-    document.body.innerHTML = "<h2>Inspect Diblokir</h2>";
+    document.body.innerHTML = "<h2 style='color:white;text-align:center;margin-top:40vh'>Inspect Diblokir</h2>";
   }
 },500);
 
-// ===== BLOCK VIEW-SOURCE TRY =====
+// ===== BLOCK VIEW SOURCE =====
 if(location.href.startsWith("view-source:")){
   location.replace("about:blank");
 }
+
+// ===== ANTI PRINTSCREEN =====
+document.addEventListener("keyup", function(e){
+  if(e.key === "PrintScreen"){
+    document.body.style.filter = "blur(10px)";
+    setTimeout(()=>{
+      document.body.style.filter = "none";
+    },1000);
+  }
+});
+
+// ===== LOCK WHEN TAB CHANGE =====
+document.addEventListener("visibilitychange", function(){
+  if(document.hidden){
+    document.body.innerHTML = "<h2 style='color:white;text-align:center;margin-top:40vh'>Layar Dikunci</h2>";
+  } else {
+    location.reload();
+  }
+});
 </script>
 
 </body>
