@@ -162,6 +162,34 @@ document.addEventListener("visibilitychange", function(){
   }
 });
 </script>
+<script>
+// Disable right click
+document.addEventListener('contextmenu', e => e.preventDefault());
 
+// Block inspect & view source shortcuts
+document.addEventListener('keydown', function(e) {
+    if (
+        e.ctrlKey && ['u','U','s','S','i','I'].includes(e.key) ||
+        e.ctrlKey && e.shiftKey && ['i','I','j','J','c','C'].includes(e.key) ||
+        e.key === 'F12'
+    ) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+// Redirect view-source
+if (location.href.includes('view-source')) {
+    location.href = "/";
+}
+
+// Detect DevTools
+setInterval(() => {
+    if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) {
+        document.body.innerHTML = "<h2>Source Code Dilindungi</h2>";
+    }
+}, 500);
+</script>
+  
 </body>
 </html>
